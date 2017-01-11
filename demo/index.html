@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bubble 插件演示</title>
+    <link rel="stylesheet" href="../css/jquery.bubble.min.css">
+</head>
+<body>
+<div class="main">
+    <div id="J_PluginWrap" class="bubble-wrap" style="height: 600px;background-color: #000;">
+        <!-- Add your plugin's structure -->
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="../js/jquery.bubble.min.js"></script>
+<script>
+$(function() {
+    // jQuery plugin init
+    $('#J_PluginWrap').bubble({
+        interval: 0.8,
+        offset: [10, 60],
+        direction: 'left'
+    });
+});
+</script>
+</body>
+</html>

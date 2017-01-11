@@ -1,0 +1,26 @@
+/**
+ * write style here
+ */
+.bubble-wrap {
+
+}
+
+.bubble-wrap .bubbles {
+    border-radius: 50%;
+    /*background-color: rgba(255, 255, 255, .15);*/
+    -webkit-box-shadow: 0 0 15px 0 rgba(255, 255, 255, .3) inset;
+    box-shadow: 0 0 15px 0 rgba(255, 255, 255, .3) inset;
+}
+
+.bubble-wrap .bubbles:after {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    margin-left: -15%;
+    content: '';
+    width: 15%;
+    height: 15%;
+    background-color: rgba(255, 255, 255, .2);
+    border-radius: 50%;
+    box-shadow: 0 0 5px 0 rgba(255, 255, 255, .3);
+}
