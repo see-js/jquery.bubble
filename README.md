@@ -38,7 +38,9 @@ $(function() {
         // 位置偏移量，[x, y]，效果与 direction 相关
         offset: [0, 60],
         // 气泡产生时间间隔，单位s
-        interval: 1.2
+        interval: 1.2,
+        // 自动停止的时间，为0则不停止，单位s
+        autoStop: 10
     });
 });
 ```

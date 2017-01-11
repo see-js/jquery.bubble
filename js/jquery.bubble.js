@@ -11,7 +11,9 @@ $(function() {
         // 位置偏移量，[x, y]，效果与 direction 相关
         offset: [0, 60],
         // 气泡产生时间间隔，单位s
-        interval: 1.2
+        interval: 1.2,
+        // 自动停止的时间，为0则不停止，单位s
+        autoStop: 10
     };
 
     var DIRFLAG = {
@@ -19,7 +21,7 @@ $(function() {
         right: true
     };
 
-    function ImPluginClass(wrap, cfg) {
+    function Bubble(wrap, cfg) {
         var config = $.extend(true, {}, cfg || {});
 
         this.wrap = wrap;
@@ -33,21 +35,28 @@ $(function() {
         this.init();
     }
 
-    ImPluginClass.prototype.init = function() {
+    Bubble.prototype.init = function() {
+        var that = this;
         // 格式化气泡容器
-        this.formatWrap();
+        that.formatWrap();
         // 启动动画
-        this.blow();
+        that.blow();
+        // 自动停止
+        if (that.get('autoStop')) {
+            setTimeout(function() {
+                that.stop.call(that);
+            }, that.get('autoStop') * 1000);
+        }
     };
 
-    ImPluginClass.prototype.formatWrap = function() {
+    Bubble.prototype.formatWrap = function() {
         var pos = this.wrap.css('position');
         if (!pos || pos === 'static') {
             this.wrap.css('position', 'relative');
         }
     };
 
-    ImPluginClass.prototype.blow = function() {
+    Bubble.prototype.blow = function() {
         var that = this;
         var wrap = that.wrap;
         var timer = that.get('timer');
@@ -92,7 +101,7 @@ $(function() {
         that.set('timer', timer);
     };
 
-    ImPluginClass.prototype.fall = function(item) {
+    Bubble.prototype.fall = function(item) {
         var that = this;
         var dir = that.get('direction');
         var wrapWdith = that.wrap.width();
@@ -104,7 +113,8 @@ $(function() {
         var decay = Math.random() * 0.4 + 0.6;
         var startx;
         var starty;
-        var endPoint;
+        var endx;
+        var endy;
         var interval;
         speedx = dir === 'right' ? speedx * -1 : speedx;
         interval = setInterval(function() {
@@ -145,20 +155,29 @@ $(function() {
                 top: nT
             });
 
-            if (nT === endPoint) {
+            if (nL === endx && nT === endy) {
                 clearInterval(interval);
                 setTimeout(function() {
                     that.remove.call(that, item);
                 }, 300);
             }
-            endPoint = nT;
+            endx = nL;
+            endy = nT;
         }, 25);
     };
 
-    ImPluginClass.prototype.remove = function(item) {
+    Bubble.prototype.remove = function(item) {
         item.fadeOut(function() {
             item.remove();
         });
+    };
+
+    Bubble.prototype.stop = function() {
+        var timer = this.get('timer');
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
     };
 
     $.fn.bubble = function(cfg) {
@@ -171,7 +190,7 @@ $(function() {
             if (!$this.parents('body').length) {
                 $this = $('body');
             }
-            $this.data('bubble', new ImPluginClass($this, config));
+            $this.data('bubble', new Bubble($this, config));
         });
     };
 });
