@@ -108,7 +108,7 @@ $(function() {
         var wrapHeight = that.wrap.height();
         var itemWidth = item.outerWidth();
         var itemHeight = item.outerHeight();
-        var speedx = Math.random() * wrapWdith * 0.1 + 10;
+        var speedx = Math.random() * wrapWdith * 0.05 + 10;
         var speedy = 0;
         var decay = Math.random() * 0.4 + 0.6;
         var startx;
@@ -122,7 +122,7 @@ $(function() {
             var nL;
             startx = parseFloat(item.css('left'));
             starty = parseFloat(item.css('top'));
-            speedy += 3;
+            speedy += 2;
             nT = starty + speedy;
             nL = startx + speedx;
 
@@ -163,7 +163,7 @@ $(function() {
             }
             endx = nL;
             endy = nT;
-        }, 25);
+        }, 35);
     };
 
     Bubble.prototype.remove = function(item) {
